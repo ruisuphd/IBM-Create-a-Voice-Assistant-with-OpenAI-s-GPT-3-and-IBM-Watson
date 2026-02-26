@@ -10,7 +10,7 @@ def speech_to_text(audio_binary):
     # Set up Watson Speech-to-Text HTTP Api url
     base_url = "https://sn-watson-stt.labs.skills.network"
 
-    api_url = base_url+'/speech-to-text/api/v1/recognize'
+    api_url = base_url + '/speech-to-text/api/v1/recognize'
 
     # Set up parameters for our HTTP request
     params = {
@@ -66,7 +66,7 @@ def openai_process_message(user_message):
     prompt = "Act like a personal assistant. You can respond to questions, translate sentences, summarize news, and give recommendations. Keep responses concise - 2 to 3 sentences maximum."
     # Call the OpenAI Api to process our prompt
     openai_response = openai_client.chat.completions.create(
-        model="gpt-5-nano", 
+        model="gpt-5-nano",
         messages=[
             {"role": "system", "content": prompt},
             {"role": "user", "content": user_message}
@@ -77,4 +77,3 @@ def openai_process_message(user_message):
     # Parse the response to get the response message for our prompt
     response_text = openai_response.choices[0].message.content
     return response_text
-
