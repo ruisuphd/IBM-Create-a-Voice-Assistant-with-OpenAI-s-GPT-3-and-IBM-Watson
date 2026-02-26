@@ -21,7 +21,7 @@ def speech_to_text_route():
     audio_binary = request.data # Get the user's speech from their request
     text = speech_to_text(audio_binary) # Call speech_to_text function to transcribe the speech
 
-	# Return the response back to the user in JSON format
+    # Return the response back to the user in JSON format
     response = app.response_class(
         response=json.dumps({'text': text}),
         status=200,
@@ -41,19 +41,19 @@ def process_message_route():
     voice = request.json['voice'] # Get user's preferred voice from their request
     print('voice', voice)
 
-	# Call openai_process_message function to process the user's message and get a response back
+    # Call openai_process_message function to process the user's message and get a response back
     openai_response_text = openai_process_message(user_message)
 
-	# Clean the response to remove any emptylines
+    # Clean the response to remove any emptylines
     openai_response_text = os.linesep.join([s for s in openai_response_text.splitlines() if s])
 
-	# Call our text_to_speech function to convert OpenAI Api's reponse to speech
+    # Call our text_to_speech function to convert OpenAI Api's response to speech
     openai_response_speech = text_to_speech(openai_response_text, voice)
 
     # convert openai_response_speech to base64 string so it can be sent back in the JSON response
     openai_response_speech = base64.b64encode(openai_response_speech).decode('utf-8')
 
-	# Send a JSON response back to the user containing their message's response both in text and speech formats
+    # Send a JSON response back to the user containing their message's response both in text and speech formats
     response = app.response_class(
         response=json.dumps({"openaiResponseText": openai_response_text, "openaiResponseSpeech": openai_response_speech}),
         status=200,
